@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Three Coasts - Year 1</title>
+  <style type="text/css">
+    body { 
+      margin:10px;
+      padding:10px; 
+    }
+    h1 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      text-transform: uppercase;
+      font-weight: 100;
+      font-size : 48pt;
+      text-align : center;
+    }
+    h2 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      font-style: italic;
+      font-weight: 100;
+    }
+    h3 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      font-weight: 100;
+    }
+    h4 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      font-style: italic;
+      font-weight: 100;
+    }
+    img {
+      border : 0;
+      display:block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom : 70px;
+    }
+    pre {
+      margin-left : 40px;
+      margin-right : 40px;
+      background : #eef;
+      padding : 5px;
+    }
+    #content {
+      width : 1000px;
+      margin : 0px auto;
+    } 
+  </style>
+</head>
+<body>
+<div id="content">
+<h1>Three Coasts: Year One</h1>
+<p><a href="threecoasts-medium.jpg" title="three coasts medium"><img alt="Three Coasts: Year One" src="threecoasts-small.jpg" title="three-coasts-small" /></a></p>
+<p>I made this image to commemorate the first year of <a href="http://www.threecoasts.net/" title="Three Coasts">Three Coasts</a>. I wanted to show all the pictures we've posted in one place, and I was inspired by the <a href="http://www.threecoasts.net/archive" title="Three Coasts Archive">Three Coasts Archive</a>. So with a bit of a lot of different tools, I put together something similar. Here's how it happened.</p>
+<h2>Finding a Printer</h2>
+<p>I knew I wanted to make a poster, but I wasn't sure how much it would cost to print out, or even where to have it printed out. <a href="http://mpix.com/" title="MPix">MPix</a> and the other photo printing sites wanted roughly $20 per print, and that seemed a little steep. A google search for "<a href="http://www.google.com/search?q=print+poster" title="print poster">print poster</a>" brought up a lot of results, but not much in the inexpensive range.</p>
+<p>Then I ran into <a href="http://photo.net/casual-conversations-forum/00QMHX" title="first photo.net post">two</a> different <a href="http://photo.net/wedding-photography-forum/00PXTG" title="second photo.net post">posts</a> on <a href="http://photo.net/" title="photo.net">photo.net</a> which mentioned a site called <a href="http://www.shortrunposters.com/" title="shortrunposters.com">shortrunposters.com</a>. They only sell 18 x 24 inch posters. Each one costs $2. Shipping is a flat $10 fee for any number of posters. After a little more searching I decided to try them out.</p>
+<h2>Getting the Images</h2>
+<p>After I found a printer, I needed to get the images that would make up the poster. Since Three Coasts is hosted on <a href="http://tumblr.com/" title="tumblr.com">tumblr</a>, and tumblr provides a fairly <a href="http://www.tumblr.com/api" title="tumblr api">simple api</a>, I wrote a script in <a href="http://php.net/" title="php.net">PHP</a> to call the api for Three Coasts, with the return value set to <a href="http://en.wikipedia.org/wiki/JSON" title="json">json</a>. PHP has some <a href="http://php.net/manual/en/book.json.php" title="php json methods">native JSON methods</a> that <a href="http://www.php.net/manual/en/function.json-decode.php" title="json decode">turn a JSON encoded string into a PHP object</a>, which made manipulating the data from the API simple.</p>
+<h3>The API data</h3>
+<p>The raw data from the API looks like this:</p>
+<pre><code>{
+   "tumblelog":{
+      "title":"Three Coasts",
+      "description":"West Coast, East Coast, Middle Coast",
+      "name":"threecoasts",
+      "timezone":"US/Eastern",
+      "cname":"threecoasts.net",
+      "feeds":[
+
+      ]
+   },
+   "posts-start":0,
+   "posts-total":"327",
+   "posts-type":false,
+   "posts":[
+      {
+         "id":813231499,
+         "url":"http://threecoasts.net/post/813231499",
+         "url-with-slug":"http://threecoasts.net/post/813231499",
+         "type":"photo",
+         "date-gmt":"2010-07-15 01:58:52 GMT",
+         "date":"Wed, 14 Jul 2010 21:58:52",
+         "bookmarklet":0,
+         "mobile":0,
+         "feed-item":"",
+         "from-feed-id":0,
+         "unix-timestamp":1279159132,
+         "format":"markdown",
+         "reblog-key":"Fs1pWbdZ",
+         "slug":"",
+         "photo-caption":"",
+         "width":"600",
+         "height":"800",
+         "photo-url-1280":"http://threecoasts.net/photo/1280/813231499/1/tumblr_l5ktiesoN21qzikgy",
+         "photo-url-500":"http://25.media.tumblr.com/tumblr_l5ktiesoN21qzikgyo1_500.jpg",
+         "photo-url-400":"http://24.media.tumblr.com/tumblr_l5ktiesoN21qzikgyo1_400.jpg",
+         "photo-url-250":"http://28.media.tumblr.com/tumblr_l5ktiesoN21qzikgyo1_250.jpg",
+         "photo-url-100":"http://30.media.tumblr.com/tumblr_l5ktiesoN21qzikgyo1_100.jpg",
+         "photo-url-75":"http://28.media.tumblr.com/tumblr_l5ktiesoN21qzikgyo1_75sq.jpg",
+         "photos":[
+
+         ]
+      }
+   ]
+}
+</code></pre>
+<h3>Using the API data to get the images</h3>
+<p>The interesting part of the API data is the <code>posts</code> array which contains an object for each post. That object then has the <code>photo-url-1280</code> parameter which specifies the URL for the picture in the post. The tumblr api restricts a result set to 50 posts, so the PHP script starts at 0 and increments by 50 until the it reaches the final post (as indicated by the <code>posts-total</code> parameter). For each group of 50 posts, it loops over the <code>post</code>s, extracts the URL from the <code>photo-url-1280</code>, and saves it to disk, naming it according to the <code>unix-timestamp</code> parameters.</p>
+<h2>Converting the images</h2>
+<p>The PHP script ended up pulling down 327 images from the site (as of Thursday July 15th, 2010 at 12:00 EST), which total about 115 Mb. Each image is 1280 pixels on its longest side (except for a few which are smaller). Working with these images at this size would be overwhelming, so I had to convert them to something smaller.</p>
+<p>Since the Three Coasts archive has all the images in columns with the same width, I had to convert all the images to be the same width (and smaller). Thank goodness for <a href="http://www.imagemagick.org/" title="ImageMagick">ImageMagick</a>, specifically its <a href="http://www.imagemagick.org/script/convert.php" title="ImageMagic convert">convert</a> command line tool. With a few lines in a <a href="http://en.wikipedia.org/wiki/Bash_%28Unix_shell%29" title="BASH">bash script</a>, it's very quick and easy to turn all the source images into smaller, uniformly wide, images.</p>
+<pre><code>#!/bin/bash
+
+# list all the files
+FILES=photos/*.jpg
+
+# the size in pixels of the longest side
+SIZE=800
+
+# for each file
+for f in $FILES
+do
+    # get just the filename
+    filename=`basename $f`
+
+    # the destination filename
+    dest=resized/$filename
+
+    # only if it doesn't already exist
+    if [ ! -f $dest ]
+    then
+        # imagemagick
+        convert -resize "$SIZE" $f $dest
+    else
+        echo "$destFixedWidth already exists"
+    fi
+
+done;
+</code></pre>
+<h2>The Layout</h2>
+<p>Once all the images were ready, I wanted to get them all arranged in columns, but I didn't want to do it by hand. <a href="http://staff.tumblr.com/post/561122371/new-archives" title="new tumblr archives">Tumblr writes</a> that they based their archive layout on <a href="http://tmv.proto.jp/#id=threecoasts" title="tumblr mosaic viewer">the tumblr mosaic viewer</a>, but neither site has particularly useful javascript source. So I searched and found a site which describes <a href="http://blog.creativityden.com/fluid-grid-using-jquery/" title="fluid layout with jQuery">how to create a fluid layout with jQuery</a>. And despite following the directions on that site I wasn't able to achieve a desirable result. Luckily, <a href="http://blog.creativityden.com/fluid-grid-using-jquery/#comment-675" title="comment about jQuery-masonry">one of the comments</a> on that page mentions <a href="http://desandro.com/resources/jquery-masonry/" title="jQuery Masonry">jQuery Masonry</a>, and that has made all the difference.</p>
+<p>Using jQuery Masonry is dead simple. All you have to do is create one <code>&lt;div&gt;</code> that will contain other <code>&lt;div&gt;</code>s that you want to have arranged automatically. So I wrote another bash script to write out one html page for all the images:</p>
+<pre><code>#!/bin/bash
+
+TOP=src/site/top.html
+BOTTOM=src/site/bottom.html
+OUTPUT=index.html
+
+## cat the top of the web page
+cat $TOP &gt; $OUTPUT
+
+## loop over all the images
+FILES=$1/*.jpg
+
+for f in $FILES
+do
+    # get the width
+    width=`identify $f | cut -f3 -d\ | cut -f1 -dx` 
+    height=`identify $f | cut -f3 -d\ | cut -f2 -dx`
+
+    echo "&lt;div class=\"box\"&gt;&lt;img src=\"$f\" width=\"$width\" height=\"$height\"/&gt;&lt;/div&gt;" &gt;&gt; $OUTPUT
+done;
+
+cat $BOTTOM &gt;&gt; $OUTPUT
+</code></pre>
+<p>which creates something like this:</p>
+<pre><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Three Coasts - Year 1&lt;/title&gt;
+  &lt;script type="text/javascript"  src="js/jquery-1.4.2.min.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript"  src="js/jquery.masonry.min.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript"&gt;
+    $(function(){
+      $('#wrapper').masonry({columnWidth: 210});
+    })
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="header"&gt;
+  &lt;h1&gt;Three Coasts&lt;/h1&gt;
+  &lt;h2&gt;Year One&lt;/h2&gt;
+&lt;/div&gt;
+&lt;div id="wrapper" class="wrap"&gt;
+  &lt;div class="box"&gt;&lt;img src="fixedWidth/1247693489.jpg" width="800" height="1067"/&gt;&lt;/div&gt;
+  &lt;div class="box"&gt;&lt;img src="fixedWidth/1247735205.jpg" width="800" height="1196"/&gt;&lt;/div&gt;
+
+  ... (skipping 323 images)
+
+  &lt;div class="box"&gt;&lt;img src="fixedWidth/1279057467.jpg" width="800" height="1195"/&gt;&lt;/div&gt;
+  &lt;div class="box"&gt;&lt;img src="fixedWidth/1279159132.jpg" width="800" height="1067"/&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Then all you have to do is load that up in a browser and the images are loaded in a grid just like in the archive.</p>
+<h2>Saving the layout</h2>
+<p>Once the browser renders the images in the desired way, the next step is to save an image of that layout. My first attempt was to use the print to pdf method in the OS X print menu. But that produced a multi-page (US-letter size) document with all sorts of page numbers and time stamps. Next I looked into whether one of those firefox add-ons could work, and I installed <a href="https://addons.mozilla.org/en-US/firefox/addon/66589/" title="screen capture elite">screen capture elite</a>. But rendering a large image in html in the browser tends to make the browser unresponsive for long periods of time, and what I really wanted was a way to use the command line to save the image.</p>
+<p>After a little searching, I ended up at the website for <a href="http://www.paulhammond.org/webkit2png/" title="webkit2png">webkit2png</a>. This is exactly what I was looking for. It's a <a href="http://en.wikipedia.org/wiki/Python_%28programming_language%29" title="python">python</a> script that loads a page in a headless webkit instance, and saves the rendered result as a <a href="http://en.wikipedia.org/wiki/Portable_Network_Graphics" title="png">PNG</a> file. For instance, calling this line:</p>
+<pre><code>python webkit2png.py -F -o tcyo http://royhodgman.com/threecoasts-yearone/
+</code></pre>
+<p>results in this image (tcyo-full.jpg):</p>
+<p><a href="tcyo-full.jpg" title="this page, in jpg form"><img alt="Self Image" src="tcyo-small.jpg" title="tcyo-small" /></a></p>
+<p>It's fantastic.</p>
+<h2>Optimizing the layout</h2>
+<p>Shortrunposters only prints posters at 18 x 24 inches, up to 800dpi. They actually leave a .5 inch border around the print, so they are only printing 17 x 23 inches of image onto a piece of paper that measures 18 x 24 inches. They recommend that images to be printed are at least 150dpi, but why not go all the way up to 800dpi? When I originally started playing around with jQuery masonry, I had scaled all the images to be 200 pixels wide. I was able to get layout that matched the 17 x 23 dimensions quite nicely, but it was only at around 200dpi. So with a little math, and <a href="http://www.r-project.org/" title="R">R</a> for a mathematical scratchpad (which is complete overkill), I worked out that if 17 inches at 800dpi is 13600 pixels, and if I scaled all the source images to be 800 pixels (and scaled all the padding and margins and text sizes and column widths accordingly), then I could produce an image that will be very close to 17 x 23 inches at 800dpi.</p>
+<p>After scaling the images and recreating the html page, I set webkit2png off to do its thing. This took about 9 minutes. In the end I had a 350 Mb PNG file. Running this through ImageMagick's <code>convert</code> command to transform the PNG to a JPG file reduced the size to about 50 Mb.</p>
+<p>17 x 23 inches at 800dpi is 13600 x 18400 pixels. The image I had created was 13608 x 18776. I had too much spacing at the top for the text, and was just barely too wide. So I had to play around with the stylesheet a little bit, and do several more iterations of the following process:</p>
+<ol>
+<li>modify css</li>
+<li>preview page in browser (on a page with only 15 images)</li>
+<li>render to PNG with webkit2png</li>
+<li>convert to JPG</li>
+<li>inspect layout and image size</li>
+</ol>
+<p>Again, thank god for webkit2png, without that step in this workflow, this process would have been maddening.</p>
+<h2>Conclusion</h2>
+<p>So in the end the final image was 13600 x 18343 pixels, and I think it looks pretty good.</p>
+<h2>PS</h2>
+<p>This document was written up using <a href="http://en.wikipedia.org/wiki/Markdown" title="Markdown">markdown</a>.</p></div>
+</body>
+</html>

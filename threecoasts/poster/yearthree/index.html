@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Three Coasts - Year Three</title>
+    <link href='style/custom-bootstrap.min.css' rel='stylesheet' type='text/css' />
+    <link href='style/highlightjs-7.3-default.min.css' rel='stylesheet' type='text/css' />
+    <link href='style/style.css' rel='stylesheet' type='text/css' />
+    <script src='style/highlightjs-7.3-default.min.js'></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+  </head>
+  <div class='container'>
+    <div class='row'>
+      <div class='span12'>
+        <h1>Three Coasts: Year Three</h1>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span6'>
+        <a href='img/three-coasts-year-three-regular-medium.jpg' title='three coasts year three regular medium'>
+          <img alt='Three Coasts: Year Three Regular' src='img/three-coasts-year-three-regular-small.jpg' title='Three Coasts: Year Three Regular' />
+        </a>
+      </div>
+      <div class='span6'>
+        <a href='img/three-coasts-year-three-everything-medium.jpg' title='three coasts year three everything medium'>
+          <img alt='Three Coasts: Year Three Everything' src='img/three-coasts-year-three-everything-small.jpg' title='Three Coasts: Year Three Everything' />
+        </a>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h2>Two posters for year three</h2>
+        <p>As with <a href="../yeartwo/index.html" title="Three Coasts: Year Two">last year</a> and <a href="../yearone/index.html" title="Three Coasts: Year One">the year before</a>, I've made another poster from the pictures posted to three coasts. In fact, I've made two posters. The first with just pictures from the third year, and the second with all the pictures that have ever been on the site.</p>
+        <h2>The design</h2>
+        <p>As I finished up last year's poster, I started thinking about what I wanted to do for the third year (in much the same way that I am now trying to come up with ideas for the fourth year's poster), and somehow got inspired to try to create a <a href="http://en.wikipedia.org/wiki/Penrose_tiling" title="Penrose Tiling">Penrose Tiling</a> out of the pictures. Specifically, I wanted to create a <a href="http://en.wikipedia.org/wiki/Penrose_tiling#Rhombus_tiling_.28P3.29" title="P3 Penrose Tiling">P3 tiling</a> like the one in the picture from wikipedia below:</p>
+        
+        <p><img src="img/500px-Penrose_Tiling_Rhombi.svg.png" title="P3 Penrose Tiling" alt="Wikipedia P3 Penrose Tiling" /></p>
+        <h3>Initial Challenges</h3>
+        <p>Before trying to figure out if I could arrange our images in a penrose tiling, and before trying to work out how to generate a penrose tiling, had to learn about the two shapes involved in a P3 tiling ( the fat rhombus and the thin rhombus ), and decide how to distort an image to assume those shapes.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span4'>
+        <p><img src="img/200px-Penrose_rhombs_matching_rules.svg.png" title="P3 Rhombi" alt="Rhombi" /></p>
+      </div>
+      <div class='span8'>
+        <p>The thin rhombus has a small angle of 36 degrees, and a large angle measuring 144 degrees. The fat rhombus has a small angle of 72 degrees, and a large angle of 108 degrees. There is no good way to transform a rectangular photograph into a rhombus like these without quite a bit of distortion or loss of original image material.</p>
+        
+        <p>At first thought the best thing to do might be to drag the corners of an image down to the center of a shared side, but I couldn't figure out how to make <a href="http://www.imagemagick.org/" title="ImageMagick">ImageMagick</a> do something like that, so I gave up and moved on to the next approach.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h3>Masks</h3>
+        <p>The second approach was to just slice off the corners of an image to make it assume a rhombus shape. ImageMagick can accomplish that by drawing some right triangles where the hypoteni go from the middle of each side of the rectangle to the middle of each adjacent side. A shell script to do that might look something like this:</p>
+        <pre><code class='bash'>WIDTH=600&#x000A;HEIGHT=436&#x000A;&#x000A;HALFHEIGHT=$((HEIGHT/2))&#x000A;HALFWIDTH=$((WIDTH/2))&#x000A;&#x000A;OUTLINE_WIDTH=10&#x000A;NEW_WIDTH=$((WIDTH-(2*OUTLINE_WIDTH)))&#x000A;NEW_HEIGHT=$((HEIGHT-(2*OUTLINE_WIDTH)))&#x000A;NEW_HALFHEIGHT=$((NEW_HEIGHT/2))&#x000A;NEW_HALFWIDTH=$((NEW_WIDTH/2))&#x000A;&#x000A;convert -size &quot;$WIDTH&quot;x&quot;$HEIGHT&quot; xc:white -fill black \&#x000A;    -draw &quot;polygon 0,0 0,$HALFHEIGHT $HALFWIDTH,0&quot; \&#x000A;    -draw &quot;polygon 0,$HALFHEIGHT 0,$HEIGHT $HALFWIDTH,$HEIGHT&quot; \&#x000A;    -draw &quot;polygon $HALFWIDTH,$HEIGHT $WIDTH,$HEIGHT $WIDTH,$HALFHEIGHT&quot; \&#x000A;    -draw &quot;polygon $WIDTH,$HALFHEIGHT $WIDTH,0, $HALFWIDTH,0&quot; \&#x000A;    mask.png</code></pre>
+        <p>This took a little while to figure out how to do with ImageMagick, but eventually it became clear that the following command would be come very useful in using a source image and a mask to create a rhombus:</p>
+        
+        <pre><code>convert source.jpg mask.png -alpha off -compose copy_opacity -composite rhombus.png&#x000A;</code></pre>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span4 caption'>
+        <p><img src="img/2012-06-10-test-300.jpg" title="2012-06-10-test" alt="2012-06-10-test" />
+        source.jpg</p>
+      </div>
+      <div class='span4 caption'>
+        <p><img src="img/2012-06-10-framemask-300.png" title="2012-06-10-framemask" alt="2012-06-10-framemask" />
+        mask.png</p>
+      </div>
+      <div class='span4 caption'>
+        <p><img src="img/2012-06-10-masked-300.png" title="2012-06-10-masked" alt="2012-06-10-masked" />
+        rhombus.png</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>So, naturally, the first thing I wanted to do with a rhombus was see if I could arrange it sort of like how a P3 tiling looks. Using some imagemagick commands (which I neglected to save) to rotate and re-position an image, I copied the rhombus five times to make a star:</p>
+        
+        <p><img src="img/align_rotate_merge.png" title="align_rotate_merge" alt="align_rotate_merge" /></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h3>Borders</h3>
+        <p>The next step was to add a border to the rhombus. After trying a couple of methods which produced undesirable (and unsaved) results, the way that worked best for me was to overlay the rhombus in the center of a larger white rhombus. So now instead of creating one mask, I had to create two, one for the larger white rhombus which would be the background and eventual border, and one for the current image.</p>
+        
+        <p>First, create the background rhombus of all white:</p>
+        
+        <pre><code>convert all-white.png big-mask.png -alpha off -compose copy_opacity -composite background.png&#x000A;</code></pre>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span4 grey caption'>
+        <p><img src="img/all-white.png" title="all-white" alt="all-white" />
+        all-white.jpg</p>
+      </div>
+      <div class='span4 grey caption'>
+        <p><img src="img/2012-06-10-framemask-300.png" title="2012-06-10-framemask" alt="2012-06-10-framemask" />
+        big-mask.png</p>
+      </div>
+      <div class='span4 grey caption'>
+        <p><img src="img/background.png" title="background" alt="background" />
+        background.png</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>Next, create the foreground rhombus from an image:</p>
+        
+        <pre><code>convert source.jpg small-mask.png -alpha off -compose copy_opacity -composite foreground.png&#x000A;</code></pre>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span4 caption'>
+        <p><img src="img/source.jpg" title="source" alt="source.jpg" />
+        source.jpg</p>
+      </div>
+      <div class='span4 caption'>
+        <p><img src="img/small-mask.png" title="small-mask" alt="small-mask" />
+        small-mask.png</p>
+      </div>
+      <div class='span4 caption'>
+        <p><img src="img/foreground.png" title="foreground" alt="foreground" />
+        foreground.png</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>Then position the foreground over the background to create a bordered rhombus:</p>
+        
+        <pre><code>convert -geometry +10+10 background.png foreground.png -composite bordered.png &#x000A;</code></pre>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span4 grey caption'>
+        <p><img src="img/background.png" title="background" alt="background" />
+        background.png</p>
+      </div>
+      <div class='span4 grey caption'>
+        <p><img src="img/foreground.png" title="foreground" alt="foreground" />
+        foreground.png</p>
+      </div>
+      <div class='span4 grey caption'>
+        <p><img src="img/bordered.png" title="bordered" alt="bordered" />
+        bordered.png</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>Putting the bordered rhombus back into the star creation script from before results in the following image:</p>
+        
+        <p><img src="img/align_rotate_merge-2.png" title="align_rotate_merge-2" alt="align_rotate_merge-2" /></p>
+        
+        <p>That was encouraging and I thought it looked pretty good. So I took a break for five months and didn't touch this project again until November.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h2>Generating Tilings</h2>
+        <p>When I did come back to the project, having figured out how to mask, border, and rotate arbitrary images, I decided it was time to figure out how to arrange them in a penrose style pattern. After reading the Penrose tiling <a href="http://en.wikipedia.org/wiki/Penrose_tiling" title="Penrose Tiling">wikipedia page</a> again, I started to figure out how I was going to write a program that generated Penrose tiles. There is quite a bit of information there about how to generate a tiling, and how different tiles fit together, or decompose into other tiles.</p>
+        
+        <p>But before I started writing my own code, I decided to see if anyone else had written code to do this. The first result for a <a href="http://www.google.com/search?q=p3+penrose+tiling+python" title="p3 penrose tiling python">search on google</a> for "p3 penrose tiling python" is:</p>
+        
+        <p><a href="http://www.janthor.com/sketches/index.php?/archives/3-P3-Penrose-Tilings.html" title="Jan Thor Penrose">http://www.janthor.com/sketches/index.php?/archives/3-P3-Penrose-Tilings.html</a></p>
+        
+        <p>This page features not only a thorough discussion of what is involved in writing a program to generate a P3 tiling, but it also includes sample code (<code>janthor.py</code>) that generates images like this:</p>
+        
+        <p><img src="img/penrose_p3_star_03.jpg" title="penrose_p3_star_03" alt="img/penrose_p3_star_03" /></p>
+        
+        <p>The output of the script is an svg file composed almost entirely of instructions concerning where and how to draw rhombi.</p>
+        
+        <pre><code>&lt;path fill="#ff0" d="m-449.027977,763.932023l85.756713,-118.033989l138.757276,45.084972l-85.756713,118.033989z"/&gt;&#x000A;&lt;path fill="#ff0" d="m449.027977,763.932023l-85.756713,-118.033989l-138.757276,45.084972l85.756713,118.033989z"/&gt;&#x000A;&lt;path fill="#ff0" d="m-587.785252,809.016994l0.000000,-145.898034l138.757276,-45.084972l0.000000,145.898034z"/&gt;&#x000A;&lt;path fill="#ff0" d="m587.785252,809.016994l0.000000,-145.898034l-138.757276,-45.084972l0.000000,145.898034z"/&gt;&#x000A;</code></pre>
+        
+        <p>Internally, <code>janthor.py</code> represents each rhombus by its location and relationship to nearby rhombi. During the inflation phase of a tiling generation, the script turns one fat rhombus into one smaller thin rhombus and two smaller fat rhombi. When inflating a thin rhombus, it creates one smaller thin and one smaller fat rhombus. But during this process some duplicate rhombi are created, and to identify duplicates, the script computes their centers and looks for nearly identically located shapes.</p>
+        
+        <p>This center computation is the key to the rest of the project. Using the center calculation, I first modified the script to produce output which marked the center of each rhombus with a dot, just to make sure it looked right.</p>
+        
+        <p><img src="img/penrose_p3_star_03_centers.jpg" title="penrose_p3_star_03_centers" alt="img/penrose_p3_star_03_centers" /></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h3>Arranging rhombi</h3>
+        <p>The next step was to try to figure out how to place and rotate each image, after being cropped to an appropriately sized rhombus, onto the canvas to make the tiling. The internal representation of a rhombus has not only the coordinates of its center, but also the coordinates of one of its vertexes. By figuring out the distance in both x and y directions from the vertex to the center:</p>
+        
+        <pre><code>x_dist = center.x - vertex.x&#x000A;y_dist = center.y - vertex.y&#x000A;</code></pre>
+        
+        <p>I could then pass those values to the <a href="http://en.wikipedia.org/wiki/Atan2" title="atan2">atan2 function</a> to find the angle the rhombus has been rotated from its natural horizontal position. Wikipedia explains it better:</p>
+        
+        <blockquote><p>For any real number (e.g., floating point) arguments x and y not both equal to zero, atan2(y, x) is the angle in radians between the positive x-axis of a plane and the point given by the coordinates (x, y) on it. The angle is positive for counter-clockwise angles (upper half-plane, y > 0), and negative for clockwise angles (lower half-plane, y &lt; 0).</p></blockquote>
+        
+        <p>What's being calculated is this:</p>
+        
+        <p><img src="img/rotated_rhombus_annotated.jpg" title="rotated_rhombus_annotated" alt="rotated_rhombus_annotated" /></p>
+        
+        <p>So, after figuring out much a rhombus needs to be rotated, as well as where the center of it should be positioned on the canvas, I could start to try to build a tiling of images.</p>
+        
+        <p>I modified the <code>janthor.py</code> script to save information (location, rotation, size) for each shape into an sqlite database. That way I could create second script to play around with how to arrange the images without having to regenerate the tiling each time. As it turns out, it doesn't take very long at all for the <code>janthor.py</code> script to generate the internal representation of a tiling, but I wasn't aware of that. However, having the generation of the tiling separated from the production of the image of the tiling was useful just to keep things simple.</p>
+        
+        <p>This second script would connect to the database, loop over all the shapes, and create a build script (in bash) for the poster. Scripts building scripts. The build script would first set up a blank png as the canvas, then take each source image and resize, mask, add a border to, rotate and place it on the canvas.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h4>Resize</h4>
+        <p>Using ImageMagick's <a href="http://www.imagemagick.org/script/command-line-options.php#resize" title="resize">resize</a> operator, I took a large source image and made it the appropriate size for us in the poster.</p>
+        
+        <pre><code>convert -resize 75x75 source.jpg source_resized.jpg&#x000A;</code></pre>
+        <h4>Mask</h4>
+        <p>This is the masking process described above.</p>
+        
+        <pre><code>convert -gravity Center source_resized.jpg mask.png -alpha off -compose copy_opacity -composite source_masked.png&#x000A;</code></pre>
+        <h4>Add a border</h4>
+        <p>Also as describe above, this command takes the masked image, and places it over a slightly larger white rhombus to give it an outline.</p>
+        
+        <pre><code>convert -gravity Center white_rhombus_background.png source_masked.png -composite source_bordered.png&#x000A;</code></pre>
+        <h4>Rotate</h4>
+        <p>Using ImageMagick's <a href="http://www.imagemagick.org/Usage/distorts/#srt" title="SRT">Scale Rotate Translate</a> [SRT] distortion, this step takes the masked and bordered image and rotates it a specific amount,</p>
+        
+        <pre><code>convert source_bordered.png -virtual-pixel transparent +distort SRT "-18.000" source_rotated.png&#x000A;</code></pre>
+        <h4>Place on canvas</h4>
+        <p>With the knowledge of each rhombus' distance from the center of the tiling, this command places the center of the rotated image at that spot.</p>
+        
+        <pre><code>convert -gravity Center poster.png source_bordered.png -geometry -212+44 -composite result.png&#x000A;</code></pre>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h2>Progress</h2>
+        <p>The first time I ran these scripts, using two images, one for the fat rhombus, one for the thin rhombus, I got some strange results:</p>
+        
+        <p><img src="img/progress-1.jpg" title="progress-1" alt="progress-1" /></p>
+        
+        <p>I don't remember what was wrong about that one, but after some debugging, the build script spit out this:</p>
+        
+        <p><img src="img/progress-2.jpg" title="progress-2" alt="progress-2" /></p>
+        
+        <p>That was really encouraging. It took a while to figure out how to infer what I needed from the output of the <code>janthor.py</code> script, and it took more time to figure out how to use ImageMagick to manipulate images in the right way, so to see that first tiling that looked arranged correctly was great. Granted, it only used two images and some of the borders were off and the background was gray, but most of those issues could be addressed quickly. Before long I had modified the scripts to use all the three coasts images from the past year and played around with the borders.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span3'>
+        <p><a href="img/canvas-01-small.png" title="canvas-01"><img src="img/canvas-01-small.png" title="canvas-01" alt="canvas-01" /></a></p>
+      </div>
+      <div class='span3'>
+        <p><a href="img/canvas-02-small.png" title="canvas-02"><img src="img/canvas-02-small.png" title="canvas-02" alt="canvas-02" /></a></p>
+      </div>
+      <div class='span3'>
+        <p><a href="img/canvas-03-small.png" title="canvas-03"><img src="img/canvas-03-small.png" title="canvas-03" alt="canvas-03" /></a></p>
+      </div>
+      <div class='span3'>
+        <p><a href="img/canvas-04-small.png" title="canvas-04"><img src="img/canvas-04-small.png" title="canvas-04" alt="canvas-04" /></a></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>Eventually I got something that looked about right.</p>
+        
+        <p><img src="img/canvas-05.jpg" title="canvas-05" alt="canvas-05" /></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h2>Processing Images</h2>
+        <p>The build script to create that image makes extensive use of ImageMagick, and each set of operations on an image (resize, mask, border, rotate, translate) takes a non trivial amount of time. Every time I created and ran a new script, it would take a little more than an hour to execute. This is on a new and fast machine with plenty of RAM too. The more I tinkered with border widths and other little modifications to the final output, and the more I had to sit around and wait for everything to be done, the more I thought about ways to speed up this whole process.</p>
+        
+        <p>During one of the image assembly runs I looked at the <a href="http://en.wikipedia.org/wiki/Activity_Monitor" title="Activity Monitor">Activity Monitor</a> to see how much RAM was being used and I noticed that only one of the eight processor cores was being used. Despite ImageMagick's <a href="http://www.imagemagick.org/script/parallel.php" title="ImageMagick Parallel">claims to use multiple cores</a> when built with <a href="http://en.wikipedia.org/wiki/OpenMP" title="OpenMP">OpenMP</a> support, and my local version of ImageMagick being build with OpenMP support, it was not using all available cores. So instead of writing one build script to construct the final image, I created eleven:</p>
+        
+        <ul>
+        <li>one script to do the initial setup
+        
+        <ul>
+        <li>create the masks</li>
+        </ul>
+        </li>
+        <li>eight scripts, each of which takes one eight of the images to be used and manipulates them
+        
+        <ul>
+        <li>resize, mask, border, rotate</li>
+        <li>place on large canvas</li>
+        </ul>
+        </li>
+        <li>one script to finish everything off
+        
+        <ul>
+        <li>compose all eight individual large partial canvases into one large unified canvas</li>
+        </ul>
+        </li>
+        <li>one script to manage the other ten
+        
+        <ul>
+        <li>first run the setup script</li>
+        <li>then run the eight image processing scripts</li>
+        <li>then run the finish script</li>
+        </ul>
+        </li>
+        </ul>
+        
+        
+        <p>With all eight of the image processing scripts running at the same time, all eight cores were being maxed out and the whole process took nearly one eighth of the time (closer to two fifteenths, between 8 and 10 minutes). The Activity Monitor was happy.</p>
+        
+        <p><img src="img/activity-monitor.png" title="activity-monitor" alt="activity-monitor" /></p>
+        
+        <p>This is what the managing script looks like:</p>
+        
+        <pre><code>#!/bin/bash&#x000A;&#x000A;# call the set up script&#x000A;bash setup.sh&#x000A;&#x000A;# call each of the different shape scripts&#x000A;echo 'starting make-0.sh'&#x000A;bash make_0.sh &amp; &#x000A;echo 'starting make-1.sh'&#x000A;bash make_1.sh &amp; &#x000A;echo 'starting make-2.sh'&#x000A;bash make_2.sh &amp; &#x000A;echo 'starting make-3.sh'&#x000A;bash make_3.sh &amp; &#x000A;echo 'starting make-4.sh'&#x000A;bash make_4.sh &amp; &#x000A;echo 'starting make-5.sh'&#x000A;bash make_5.sh &amp; &#x000A;echo 'starting make-6.sh'&#x000A;bash make_6.sh &amp; &#x000A;echo 'starting make-7.sh'&#x000A;bash make_7.sh &amp; &#x000A;&#x000A;# wait for the scripts to finish&#x000A;echo 'waiting for make scripts to finish'&#x000A;&#x000A;while true; do&#x000A;&#x000A;    # pause for a bit&#x000A;    sleep 2&#x000A;&#x000A;    # count the lock files in the lock directory&#x000A;    NUM_LOCKS=$( ls -l target/lock/*.lock | wc -l )&#x000A;&#x000A;    echo "there are $NUM_LOCKS processes still running"&#x000A;&#x000A;    # if there are zero locks, then we're done&#x000A;    if [ "$NUM_LOCKS" -eq "0" ]; then&#x000A;        break;&#x000A;    fi&#x000A;&#x000A;done&#x000A;&#x000A;# now call the finish script&#x000A;echo "calling the finish script"&#x000A;bash finish.sh&#x000A;</code></pre>
+        
+        <p>The &amp; symbol at the end of the lines calling the other make files</p>
+        
+        <pre><code>bash make_0.sh &amp; &#x000A;</code></pre>
+        
+        <p>sends them to the background and moves on to the next line, this is how parallelization is achieved. The beginning of each image processing script looks like this:</p>
+        
+        <pre><code>###&#x000A;# Create lock file&#x000A;###&#x000A;echo "creating lock file for make_0.sh"&#x000A;touch target/lock/make_0.lock&#x000A;&#x000A;###&#x000A;# Create canvas&#x000A;###&#x000A;echo 'creating canvas number 0'&#x000A;convert -size 9000.0x9000.0 xc:transparent target/canvas-0.png&#x000A;</code></pre>
+        
+        <p>and ends with this:</p>
+        <pre><code class='bash'>###&#x000A;# Remove lock file&#x000A;###&#x000A;echo &quot;removing lock file for make_0&quot;&#x000A;rm target/lock/make_0.lock</code></pre>
+        <p>The while loop back in the manager script looks for these lock files every two seconds, and only once they have all been removed (signifying that the image processing scripts have finished) does it call the finish script.</p>
+        
+        <p>The body of each of the image processing scripts is a collection of blocks that look like this:</p>
+        
+        <pre><code>#######&#x000A;### Shape number 368&#x000A;######&#x000A;echo "working on shape [ 368 ]"&#x000A;echo ""&#x000A;&#x000A;###&#x000A;# Resize and mask [ 1296245556.jpg ]&#x000A;###&#x000A;echo 'resizing and masking [ 1296245556.jpg ]'&#x000A;convert photos/all/1296245556.jpg -resize 548.540201454x178.231515628^ target/resized-1296245556.jpg&#x000A;convert -gravity Center target/resized-1296245556.jpg target/thin-548.540201454-small-mask.png \&#x000A;        -alpha off -compose copy_opacity -composite target/inner-1296245556.png&#x000A;convert -gravity Center target/thin-548.540201454-outer.png target/inner-1296245556.png \&#x000A;        -composite target/masked-1296245556.png&#x000A;mogrify +distort SRT "90" target/masked-1296245556.png&#x000A;&#x000A;###&#x000A;# Rotate target/masked-1296245556.png by -18.0 degrees&#x000A;###&#x000A;echo "rotating [ target/masked-1296245556.png ] by [ -18.0 ] degrees"&#x000A;convert target/masked-1296245556.png -virtual-pixel transparent \&#x000A;        +distort SRT "-18.000000" target/rotated-1296245556.png&#x000A;&#x000A;###&#x000A;# Place target/rotated-1296245556.png on canvas&#x000A;###&#x000A;echo "placing [ target/rotated-1296245556.png ] on the canvas"&#x000A;convert -gravity Center target/canvas-0.png target/rotated-1296245556.png \&#x000A;        -geometry -1091.07+2648.95 -composite target/canvas-0.png&#x000A;</code></pre>
+        
+        <p>That is one unit of work for one image (1296245556.jpg). These are the units of work that are spread across all eight image processing scripts.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h3>Animation</h3>
+        <p>At about this time I thought it would be fun to see what would look like if I animated the creation of the image. My approach was to arrange each rhombus one at a time, copy the entire canvas off to a frame, add another rhombus and repeat. The video on the left shows my first attempt where shapes were introduced from the bottom up. On the right they are added by increasing distance from the origin.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span6'>
+        <video controls='controls' height='460' width='460'>
+          <source src='img/animation-01.mp4' type='video/mp4'></source>
+          <source src='img/animation-01.webm' type='video/webm'></source>
+        </video>
+      </div>
+      <div class='span6'>
+        <video controls='controls' height='460' width='460'>
+          <source src='img/animation-02.mp4' type='video/mp4'></source>
+          <source src='img/animation-02.webm' type='video/webm'></source>
+        </video>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>You'll notice that the end product in those two animations aren't the same. Somewhere in the first one I was using an image twice by accident. When I took that out, all the other images shifted around quite a bit.</p>
+        <h3>All the Photos</h3>
+        <p>The natural progression from using all the photos from the third year is to use all the photos that have ever been posted. Doing that gave me this image:</p>
+        
+        <p><img src="img/04-canvas-first-will-all-pictures.jpg" title="04-canvas-first-will-all-pictures" alt="04-canvas-first-will-all-pictures" /></p>
+        
+        <p>So that had to be animated too.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span8 offset2'>
+        <video controls='controls' height='620' width='620'>
+          <source src='img/animation-03.mp4' type='video/mp4'></source>
+          <source src='img/animation-03.webm' type='video/webm'></source>
+        </video>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h3>Stars and Circles</h3>
+        <p>Once I started adding shapes to the canvas from the middle, and started animating that process, I saw that in addition to the large five pointed star shape that was the end result of these early scripts, the penrose tiling also has a nice circular shape in the middle. My first goal was to create a tiling with N shapes, then fill up all N shapes with images. But if I created a tiling with N shapes, and starting from the center only filled M of those shapes with images (where M &lt; N ), the output began to look more like a circle. In effect, I would run out of images before they would have been placed on the pointy part of the arms of the star generated by the tiling.</p>
+        
+        <p>These two images show this visually. On the left is the output of the penrose algorithm. On the right is the output of the penrose algorithm, but with only the shapes in the center filled in, revealing a somewhat circular shape.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span6'>
+        <p><img src="img/penrose_p3_star_03_no_circles.png" title="penrose_p3_star_03_no_circles" alt="penrose_p3_star_03_no_circles" /></p>
+      </div>
+      <div class='span6'>
+        <p><img src="img/penrose_p3_star_03_no_circles_dim.png" title="penrose_p3_star_03_no_circles_dim" alt="penrose_p3_star_03_no_circles_dim" /></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>Using that approach with the images from only the third year, the output looks like this:</p>
+        
+        <p><img src="img/05-canvas-distance-from-origin.jpg" title="05-canvas-distance-from-origin" alt="05-canvas-distance-from-origin" /></p>
+        
+        <p>By flipping that image around so the pointier end is on top, I made the images to go to the printer and thought I was done:</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span6'>
+        <p><img src="img/06-tcyt-labeled-small.jpg" title="06-tcyt-labeled-small" alt="06-tcyt-labeled-small" /></p>
+      </div>
+      <div class='span6'>
+        <p><img src="img/09-tcyt-labeled-small.jpg" title="09-tcyt-labeled-small" alt="09-tcyt-labeled-small" /></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>But then I wanted to see what all the images from all the years would look like as a circle:</p>
+        
+        <p><img src="img/01-canvas-first-big-circle.jpg" title="01-canvas-first-big-circle" alt="01-canvas-first-big-circle" /></p>
+        
+        <p>And while I liked that image, I wondered if it would be possible to arrange all the photos chromatically. And then another week of messing around with this started.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h2>Colors</h2>
+        <p>I read a <a href="http://charlesleifer.com/blog/using-python-and-k-means-to-find-the-dominant-colors-in-images/" title="dominant colors">blog post</a> about how to extract the dominant color or colors from an image, and decided to give it a try. Using the provided source code as a starting point, I ran it over all the images in the poster to find their dominant colors and created a new database with this information. These two images represent my first attempts at finding the dominant colors of an image and then using those colors to create borders. I don't remember why they're different, other than to guess that the one on the right was created after I modified the dominant color script to ignore the transparent pixels added by the masking operation.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span5 offset1'>
+        <p><img src="img/one.png" title="one" alt="one" /></p>
+      </div>
+      <div class='span5'>
+        <p><img src="img/two.png" title="two" alt="two" /></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h3>HSV</h3>
+        <p>The next problem was to figure out what to do with this color information. I thought it would be cool to arrange the pictures in a circle like a color wheel, but I had no idea how to do that. The dominant color script produces <a href="http://en.wikipedia.org/wiki/RGB_color_model" title="RGB">RGB</a> colors, and it was not apparent how to use that information to arrange colors in a pleasing manner was not apparent. Then, while reading wikipedia about colors, I was introduced to the <a href="http://en.wikipedia.org/wiki/HSL_and_HSV" title="HSL and HSV">HSL and HSV color spaces</a> which makes things much more simple.</p>
+        
+        <p><img src="img/Hsl-hsv_models.svg.png" title="Hsl-hsv_models.svg" alt="Hsl-hsv_models" /></p>
+        
+        <p>HSL's "hue" component is a value between 0 and 360 which regulates what I interpret as the color expressed by HSL or HSV data. Red is 0, Yellow is 60, and as H increases from 0 to 60, it gets less red, moves into orange, and ends up at yellow.</p>
+        
+        <p>Thankfully, python has <a href="http://docs.python.org/2/library/colorsys.html" title="colorsys">a number of built in functions</a> which convert between RGB, HSV and other color spaces. Using the <code>rgb_to_hsv</code> function, I converted the dominant color for each of the images from the third year into HSV and was then able to plot them on the color wheel. Since the masked fat and thin shapes for each image have different amounts of visible pixels, their dominant colors vary, so I created two color plots, one for the thin versions of the images (on the left), and one for the fat versions (on the right). Click on any of the following color plots to see them take up an entire browser window, nicely scaled because <a href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics" title="SVG">SVG</a> is great for things like this.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span6 caption'>
+        <p><a href="img/01-all-colors-thin.svg" title="01-all-colors-thin"><img src="img/01-all-colors-thin.svg" title="01-all-colors-thin" alt="01-all-colors-thin" /></a>
+        thin</p>
+      </div>
+      <div class='span6 caption'>
+        <p><a href="img/01-all-colors-fat.svg" title="01-all-colors-fat"><img src="img/01-all-colors-fat.svg" title="01-all-colors-fat" alt="01-all-colors-fat" /></a>
+        fat</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>Those looked a little dark, so I bumped up the HSV value portion of the color for each image to 100 and got this:</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span6 caption'>
+        <p><a href="img/01-all-colors-full-value-thin.svg" title="01-all-colors-full-value-thin"><img src="img/01-all-colors-full-value-thin.svg" title="01-all-colors-full-value-thin" alt="01-all-colors-full-value-thin" /></a>
+        thin + value boost</p>
+      </div>
+      <div class='span6 caption'>
+        <p><a href="img/01-all-colors-full-value-fat.svg" title="01-all-colors-full-value-fat"><img src="img/01-all-colors-full-value-fat.svg" title="01-all-colors-full-value-fat" alt="01-all-colors-full-value-fat" /></a>
+        fat + value boost</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>And then I wanted to see what it looked like for all the images, not just those from the third year. Thin regular and boosted value images are on the left, fat regular and boosted are on the right.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span3 caption'>
+        <p><a href="img/03-colors-thin-regular-value.svg" title="03-colors-thin-regular-value"><img src="img/03-colors-thin-regular-value.svg" title="03-colors-thin-regular-value" alt="03-colors-thin-regular-value" /></a>
+        all, thin, regular</p>
+      </div>
+      <div class='span3 caption'>
+        <p><a href="img/03-colors-thin-full-value.svg" title="03-colors-thin-full-value"><img src="img/03-colors-thin-full-value.svg" title="03-colors-thin-full-value" alt="03-colors-thin-full-value" /></a>
+        all, thin, value boost</p>
+      </div>
+      <div class='span3 caption'>
+        <p><a href="img/03-colors-fat-regular-value.svg" title="03-colors-fat-regular-value"><img src="img/03-colors-fat-regular-value.svg" title="03-colors-fat-regular-value" alt="03-colors-fat-regular-value" /></a>
+        all, fat, regular</p>
+      </div>
+      <div class='span3 caption'>
+        <p><a href="img/03-colors-fat-full-value.svg" title="03-colors-fat-full-value"><img src="img/03-colors-fat-full-value.svg" title="03-colors-fat-full-value" alt="03-colors-fat-full-value" /></a>
+        all, fat, value boost</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>As you can see in those plots which have not had their values boosted, some of the images under consideration already have a high value in the HSV representation of their dominant color. Boosting the values puts all the colors on a level playing field so the plot looks uniformish, but it disregards some interesting information. Two colors, both with a hue of 20, a saturation around 80 but with different values, one with a value of 10 and the other with 90, will look very different. The image with 10 for its value will have a very dark red as its dominant color, while the image with 90 for its value will be seen as having a very bright red as its dominant color. Those two colors are very close to each other on the color wheel, but pretty far apart in how they appear.</p>
+        
+        <p>At this point I decided not to try to resolve that problem. From here on out I only looked at the color wheel with boosted values in order to make things more simple. It would be interesting to figure out how to arrange the colors in the unboosted plots such that images are arranged not only by hue, but also by value.</p>
+        
+        <p>I was curious about how the HSV and HSL color spaces are different, so I tried using the <code>rgb_to_hsl</code> function to create new color plots for comparison. HSV regular and boosted values are on the left, HSL regular and boosted are on the right.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span3 caption'>
+        <p><a href="img/05-colors-fat-regular-value-hsv.svg" title="05-colors-fat-regular-value-hsv"><img src="img/05-colors-fat-regular-value-hsv.svg" title="05-colors-fat-regular-value-hsv" alt="05-colors-fat-regular-value-hsv" /></a>
+        hsv, regular</p>
+      </div>
+      <div class='span3 caption'>
+        <p><a href="img/05-colors-fat-full-value-hsv.svg" title="05-colors-fat-full-value-hsv"><img src="img/05-colors-fat-full-value-hsv.svg" title="05-colors-fat-full-value-hsv" alt="05-colors-fat-full-value-hsv" /></a>
+        hsv, value boost</p>
+      </div>
+      <div class='span3 caption'>
+        <p><a href="img/05-colors-fat-regular-value-hsl.svg" title="05-colors-fat-regular-value-hsl"><img src="img/05-colors-fat-regular-value-hsl.svg" title="05-colors-fat-regular-value-hsl" alt="05-colors-fat-regular-value-hsl" /></a>
+        hsl, regular</p>
+      </div>
+      <div class='span3 caption'>
+        <p><a href="img/05-colors-fat-full-value-hsl.svg" title="05-colors-fat-full-value-hsl"><img src="img/05-colors-fat-full-value-hsl.svg" title="05-colors-fat-full-value-hsl" alt="05-colors-fat-full-value-hsl" /></a>
+        hsl, value boost</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>HSL didn't look as well distributed as HSV, so I continued with HSV.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h2>Arranging colors</h2>
+        <p>The next step was to match the colors with locations that images would be places in the final poster. Using the coordinates of the centers of the shapes in the penrose tiling, I placed each of the dominant colors on the color plot to try to see how arranging by color would look. It takes much less time to draw the plot than it does to process all the images and compose a big poster. Before actually taking the relative positions of the colors into consideration, here's what that plot looked like:</p>
+        
+        <p><a href="img/05-shapes-regular-value.svg" title="05-shapes-regular-value"><img src="img/05-shapes-regular-value.svg" title="05-shapes-regular-value" alt="05-shapes-regular-value" /></a></p>
+        
+        <p>Next I had to spread out the color plots to match the spatial arrangement of the previous image. I saw the color plot as the result of taking the penrose plot and smushing all the colors closer to each other. I just needed to do the reverse. My approach was to give each point in both plots a unique identifier based on its location, and then match them up later. For instance, if I could partition both plots into four equally sized groups based on location, I could say that all of the points in the upper right partition of the color plot would match up with points in the upper right partition of the penrose plot. I could then further divide the upper right partition in both plots into four more partitions. With each successive subdivision, points would be assigned an identifier based on their partition. For a reddish point on the color plot, it would have an identifier which would indicate:</p>
+        
+        <ul>
+        <li>1st level: upper right</li>
+        <li>2nd level: upper left</li>
+        <li>3rd level: bottom left</li>
+        <li>...</li>
+        </ul>
+        
+        
+        <p>I had several ideas about partitioning the colors which are visualized below:</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span3'>
+        <p><a href="img/06-partition.svg" title="06-partition"><img src="img/06-partition.svg" title="06-partition" alt="06-partition" /></a></p>
+      </div>
+      <div class='span3'>
+        <p><a href="img/07-partition.svg" title="07-partition"><img src="img/07-partition.svg" title="07-partition" alt="07-partition" /></a></p>
+      </div>
+      <div class='span3'>
+        <p><a href="img/08-partition.svg" title="08-partition"><img src="img/08-partition.svg" title="08-partition" alt="08-partition" /></a></p>
+      </div>
+      <div class='span3'>
+        <p><a href="img/09-partition.svg" title="09-partition"><img src="img/09-partition.svg" title="09-partition" alt="09-partition" /></a></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span3'>
+        <p><a href="img/10-partition.svg" title="10-partition"><img src="img/10-partition.svg" title="10-partition" alt="10-partition" /></a></p>
+      </div>
+      <div class='span3'>
+        <p><a href="img/11-partition.svg" title="11-partition"><img src="img/11-partition.svg" title="11-partition" alt="11-partition" /></a></p>
+      </div>
+      <div class='span3'>
+        <p><a href="img/12-partition.svg" title="12-partition"><img src="img/12-partition.svg" title="12-partition" alt="12-partition" /></a></p>
+      </div>
+      <div class='span3'>
+        <p><a href="img/13-partition.svg" title="13-partition"><img src="img/13-partition.svg" title="13-partition" alt="13-partition" /></a></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>I thought that if I could break the plot into four equally sized groups, ideally with their intersection as close the the origin as possible, I could repeat this process over and over for each partition until each color was in a uniquely identifiable position. The general idea was right the implementation was messy and I continually had to watch for conditions where points were on the same line. Then polar coordinates made everything easier. By transforming each point into polar coordinates with the intersection of the partition lines as the new origin, I could sort by polar coordinates, then just take the first quarter of the list of points as the first quadrant and so on.</p>
+        
+        <p>The algorithm looks roughly like this, with some details left out:</p>
+        <pre><code class='python'># get all the points in the entire plot&#x000A;points = get_all_points()&#x000A;&#x000A;# set all of their region values to 0&#x000A;set_region( points, 0 )&#x000A;&#x000A;# partition them into four groups&#x000A;partition_points( points, 0 )&#x000A;&#x000A;def partition_points( points, region_id ):&#x000A;&#x000A;    # 1. find horizontal line where half the points are above and half below&#x000A;    middle_y = find_median_line( points, &quot;horizontal&quot; )&#x000A;    &#x000A;    # 2. find vertical line where half are to the left and half to the right&#x000A;    middle_x = find_median_line( points, &quot;vertical&quot; )&#x000A;&#x000A;    # 3. call the intersection of those two lines the new origin&#x000A;    origin.x = middle_x&#x000A;    origin.y = middle_y&#x000A;&#x000A;    # 4. calculate new coordinates for each point around the origin&#x000A;    polar_points = ()&#x000A;    for point in points:&#x000A;        new_point.x = point.x - origin.x&#x000A;        new_point.y = point.y - origin.y&#x000A;&#x000A;        # 5. transform those coordinates into polar values&#x000A;        polar_point = convert_to_polar( new_point )&#x000A;        polar_points.append( polar_point )&#x000A;&#x000A;    # 6. sort by angle and partition into 4 groups&#x000A;    sorted_polar_points = sort( polar_points, angle )&#x000A;    groups = ()&#x000A;    for i in ( 1, 2, 3, 4 ):&#x000A;        group[ i ] = get_partition( sorted_polar_points, i )&#x000A;        update_region_id( group[ i ], i )&#x000A;&#x000A;    # 7. repeat for each of those groups&#x000A;    for i in ( 1, 2, 3, 4 ):&#x000A;        partition_points( group[ i ], i )</code></pre>
+        <p>Using the algorithm above turned the image on the left into the image on the right:</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span6 caption'>
+        <p><a href="img/14-shapes-regular-value.svg" title="14-shapes-regular-value"><img src="img/14-shapes-regular-value.svg" title="14-shapes-regular-value" alt="14-shapes-regular-value" /></a>
+        unordered colors</p>
+      </div>
+      <div class='span6 caption'>
+        <p><a href="img/14-partition.svg" title="14-partition"><img src="img/14-partition.svg" title="14-partition" alt="14-partition" /></a>
+        ordered colors</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>In the image on the right, you can see the blues in the upper left, the greens in the lower left, and the reds and oranges in the right side of the circle.</p>
+        
+        <p>The same method also works with the star shape:</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span6 caption'>
+        <p><a href="img/16-shapes-regular-value.svg" title="16-shapes-regular-value"><img src="img/16-shapes-regular-value.svg" title="16-shapes-regular-value" alt="16-shapes-regular-value" /></a>
+        unordered colors</p>
+      </div>
+      <div class='span6 caption'>
+        <p><a href="img/16-partition.svg" title="16-partition"><img src="img/16-partition.svg" title="16-partition" alt="16-partition" /></a>
+        ordered colors</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h2>The home stretch</h2>
+        <p>Once I had the mapping between the dominant colors and the position on the penrose tiling, I modified the script that created all the build scripts to assign a specific picture to a specific location in the penrose tiling. After running all the build scripts again and waiting ten minutes, this was the result.</p>
+        
+        <p><a href="img/03-sorted-color-images.jpg" title="03-sorted-color-images"><img src="img/03-sorted-color-images_small.jpg" title="03-sorted-color-images" alt="03-sorted-color-images" /></a></p>
+        
+        <p>I also wanted to see what it would look like for each year's worth of pictures, so I tried that out too.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span3 caption'>
+        <p><a href="img/canvas-2010-7.jpg" title="canvas-2010-7"><img src="img/canvas-2010-7_small.jpg" title="canvas-2010-7" alt="canvas-2010-7" /></a>
+        2010</p>
+      </div>
+      <div class='span3 caption'>
+        <p><a href="img/canvas-2011-7.jpg" title="canvas-2011-7"><img src="img/canvas-2011-7_small.jpg" title="canvas-2011-7" alt="canvas-2011-7" /></a>
+        2011</p>
+      </div>
+      <div class='span3 caption'>
+        <p><a href="img/canvas-2012-7.jpg" title="canvas-2012-7"><img src="img/canvas-2012-7_small.jpg" title="canvas-2012-7" alt="canvas-2012-7" /></a>
+        2012</p>
+      </div>
+      <div class='span3 caption'>
+        <p><a href="img/canvas-2013-6.jpg" title="canvas-2013-6"><img src="img/canvas-2013-6_small.jpg" title="canvas-2013-6" alt="canvas-2013-6" /></a>
+        2013</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <p>In the end I made two posters, one with all the pictures from the third year (the 2012 batch above), and one with all the pictures that have ever been on three coasts.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span6'>
+        <p><a href="img/three-coasts-year-three-regular-medium.jpg" title="three coasts year three regular medium"><img src="img/three-coasts-year-three-regular-small.jpg" title="Three Coasts: Year Three Regular" alt="Three Coasts: Year Three Regular" /></a></p>
+      </div>
+      <div class='span6'>
+        <p><a href="img/three-coasts-year-three-everything-medium.jpg" title="three coasts year three everything medium"><img src="img/three-coasts-year-three-everything-small.jpg" title="Three Coasts: Year Three Everything" alt="Three Coasts: Year Three Everything" /></a></p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h2>Conclusion</h2>
+        <p>I am very pleased with how these posters came out. I don't know what I'm going to do next year to raise the bar.</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='span12'>
+        <h2>Colophon</h2>
+        <p>I've expanded the number of tools to create the site this year. I wrote everything up in a document structured by <a href="http://haml.info" title="Haml">Haml</a> and marked up by <a href="http://en.wikipedia.org/wiki/Markdown" title="Markdown">markdown</a>. The layout and initial formatting comes from <a href="http://twitter.github.io/bootstrap/" title="bootstrap">bootstrap</a> and the syntax highlighting is done by <a href="http://softwaremaniacs.org/soft/highlight/en/" title="highlightjs). I tweaked the bootstrap and highlightjs css by writing my own css with [SASS's SCSS](http://sass-lang.com &quot;SASS and SCSS">highlightjs</a>. I used <a href="https://github.com/mdub/pith" title="pith">pith</a> to put the whole site together by generating valid HTMl and CSS from the Haml, markdown and SCSS source.</p>
+      </div>
+    </div>
+  </div>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Three Coasts - Year Two</title>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript"
+          src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+  <style type="text/css">
+    body { 
+      margin:10px;
+      padding:10px; 
+    }
+    h1 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      text-transform: uppercase;
+      font-weight: 100;
+      font-size : 48pt;
+      text-align : center;
+    }
+    h2 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      font-style: italic;
+      font-weight: 100;
+    }
+    h3 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      font-weight: 100;
+    }
+    h4 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      font-style: italic;
+      font-weight: 100;
+    }
+    img {
+      border : 0;
+      display:block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom : 10px;
+    }
+    pre {
+      margin-left : 40px;
+      margin-right : 40px;
+      background : #ddf;
+      padding : 5px;
+      border : 3px solid #bbf;
+    }
+    #content {
+      width : 1000px;
+      margin : 0px auto;
+    } 
+    table {
+      width : 150px;
+      margin : 0px auto;
+    }
+    th {
+      text-align : center;    
+    }
+    td {
+      text-align : center;    
+
+    }
+    a { 
+      text-decoration: none; 
+    }
+    a:link    { color: #33f; }
+    a:visited { color: #66f; }
+    a:hover   { color: #f66; }
+
+  </style>
+</head>
+<body>
+<div id="content">
+<h1>Three Coasts: Year Two</h1>
+<p><a href="img/three-coasts-year-two-medium.jpg" title="three coasts year two medium"><img alt="Three Coasts: Year Two" src="img/three-coasts-year-two-small.jpg" title="three-coasts-year-two-small" /></a></p>
+<p>Last year <a href="http://royhodgman.com/threecoasts-yearone/" title="threecoasts year one">I made a poster</a> using all the pictures from the first year of <a href="http://www.threecoasts.net/" title="Three Coasts">Three Coasts</a>. So this year I decided to do it again, but with all the pictures from the second year. To make this year's poster I used many of the same tools and techniques from <a href="http://royhodgman.com/threecoasts-yearone/" title="threecoasts year one">I used before</a> (getting the data and pictures from <a href="http://www.tumblr.com/docs/en/api/v2" title="tumblr api">Tumblr's API</a>, converting the images to a standard size with <a href="http://www.imagemagick.org/" title="ImageMagick">ImageMagick</a>, printing with <a href="http://www.shortrunposters.com/" title="Short Run Posters">Short Run Posters</a>) which was convenient, but I still didn't get the poster done in July like I had planned (it's now October). </p>
+<p>So, as with the page I made last year about the first poster, this page will show you most of what went into making this year's poster.</p>
+<h2>The Images</h2>
+<p>This year we had 215 pictures posted to three coasts. Here is a breakdown of their widths and heights:</p>
+<table>
+<thead>
+<tr>
+<th>count</th>
+<th>width</th>
+<th>height</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>33</td>
+<td>1280</td>
+<td>848</td>
+</tr>
+<tr>
+<td>33</td>
+<td>1000</td>
+<td>664</td>
+</tr>
+<tr>
+<td>29</td>
+<td>848</td>
+<td>1280</td>
+</tr>
+<tr>
+<td>28</td>
+<td>1280</td>
+<td>857</td>
+</tr>
+<tr>
+<td>15</td>
+<td>600</td>
+<td>800</td>
+</tr>
+<tr>
+<td>13</td>
+<td>612</td>
+<td>612</td>
+</tr>
+<tr>
+<td>12</td>
+<td>857</td>
+<td>1280</td>
+</tr>
+<tr>
+<td>11</td>
+<td>800</td>
+<td>600</td>
+</tr>
+<tr>
+<td>7</td>
+<td>664</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>6</td>
+<td>598</td>
+<td>800</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1280</td>
+<td>852</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1000</td>
+<td>562</td>
+</tr>
+<tr>
+<td>3</td>
+<td>852</td>
+<td>1280</td>
+</tr>
+<tr>
+<td>3</td>
+<td>599</td>
+<td>800</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1280</td>
+<td>960</td>
+</tr>
+<tr>
+<td>2</td>
+<td>960</td>
+<td>1280</td>
+</tr>
+<tr>
+<td>2</td>
+<td>800</td>
+<td>598</td>
+</tr>
+<tr>
+<td>2</td>
+<td>480</td>
+<td>640</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1000</td>
+<td>750</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1000</td>
+<td>563</td>
+</tr>
+<tr>
+<td>1</td>
+<td>984</td>
+<td>1280</td>
+</tr>
+<tr>
+<td>1</td>
+<td>855</td>
+<td>1280</td>
+</tr>
+<tr>
+<td>1</td>
+<td>800</td>
+<td>599</td>
+</tr>
+<tr>
+<td>1</td>
+<td>800</td>
+<td>193</td>
+</tr>
+</tbody>
+</table>
+<h2>The Design</h2>
+<p>Initially I was going to make a poster very similar to last year's, with everything arranged in a grid, but that didn't seem interesting enough. I am not sure where the idea came from, but I began to think it would be interesting to create a series of concentric circles with all of our pictures. I think the final image looks close to what I thought it would look like when I started, which is good.</p>
+<h2>Plan One</h2>
+<p>When I began to think about how to make the circles, my first thought was that I would have to distort each image individually, then place them all together like a puzzle to make something fit. This did not sound fun, or likely to produce a good result, but it did lead me to my eventual solution. I had planned on writing something in java to stretch the top of an image, shrink the bottom of that image, and then bend it a little bit so it looked like it should be sitting on the outside of a circle. Without really investigating what it would take to code up a method to do this myself, I started to look at the different distortion operations that ImageMagick can do. When I found ImageMagick's <a href="http://www.imagemagick.org/Usage/distorts/#arc ImageMagick distort arc">arc distortion method</a>, my plan changed to writing a script that would distort each image with ImageMagick, and then write something else to arrange the distorted images. This is one of the images from the past year.</p>
+<p><img alt="Sample Image" src="img/sample1.jpg" title="sample one" /></p>
+<p>And after running this code</p>
+<pre><code>convert sample1.jpg -virtual-pixel White -distort Arc 60 sample1-arc.jpg
+</code></pre>
+<p>It ends up looking like this:</p>
+<p><img alt="Sample Image Distorted" src="img/sample1-arc.jpg" title="sample one arc" /></p>
+<p>But, as you can see from the table above, there are lots of different image dimensions. So how do I make a determination about how much to distort each image size? Then, how do I account for different images needing to be distorted different amounts based on which circle they're in? Images in circles closer to the center will need to have more arc than images in outer circles.</p>
+<h2>Plan Two</h2>
+<p>Eventually this line of thinking brought me to the center of the circle where I imagined one image would need to be wrapped around and connect back to itself. I chose an image at random </p>
+<p><img alt="Center 1" src="img/center1.jpg" title="center 1" /></p>
+<p>and set the Arc size to 360 in the following command</p>
+<pre><code>convert center1.jpg -virtual-pixel White -distort Arc 360 center1-arc.jpg
+</code></pre>
+<p>To get this result:</p>
+<p><img alt="Center 1 Arc" src="img/center1-arc.jpg" title="center 1 arc" /></p>
+<p>That looks pretty cool, but very distorted. Looking at the table above, you can see that there is one image which is much wider than it is tall, image 1306041706.jpg, which is 800 pixels wide by 193 pixels tall.</p>
+<p><img alt="Center 2" src="img/center2.jpg" title="center 2" /></p>
+<p>Running that through the same code results in this:</p>
+<p><img alt="Center 2 Arc" src="img/center2-arc.jpg" title="center 2 arc" /></p>
+<p>Then something clicked and I realized that if I put a bunch of images together in a line, then took that line of images and distorted it to be an arc, I wouldn't have to work with each image individually. In order for the line of images to look right, all the images needed to be the same height, so I used the same script as last year to resize everything to 800 pixels high. This made some images smaller than they were originally, and upscaled anything that was less than 800 pixels tall. And, like last year, dealing with lots of somewhat large images is taxing and time consuming, so I also made a batch of images that were just 200 pixels high to test out different ideas.</p>
+<p>So, to put the following three images into a line</p>
+<p><img alt="Image 1" src="img/image1.jpg" title="image 1" />
+<img alt="Image 2" src="img/image2.jpg" title="image 2" />
+<img alt="Image 3" src="img/image3.jpg" title="image 3" /></p>
+<p>I used the following ImageMagick command</p>
+<pre><code>convert \( image1.jpg image2.jpg image3.jpg \) -background White -gravity Center +append montage1.jpg
+</code></pre>
+<p>which ends up looking like this</p>
+<p><img alt="Montage 1" src="img/montage1.jpg" title="montage 1" /></p>
+<p>I then ran that through the arc distortion command to get this</p>
+<p><img alt="Montage 1 Arc" src="img/montage1-arc.jpg" title="montage 1 arc" /></p>
+<p>That looks good, but is still pretty distorted, particularly in the wheel in the third image, so I added a few more images to make the curve a little less severe.</p>
+<pre><code>convert \( image1.jpg image2.jpg image3.jpg image4.jpg image5.jpg image6.jpg image7.jpg image8.jpg image9.jpg \) \
+        -background White -gravity Center +append montage2.jpg
+</code></pre>
+<p><img alt="Montage 2" src="img/montage2.jpg" title="montage 2" /></p>
+<p><img alt="Montage 2 Arc" src="img/montage2-arc.jpg" title="montage 2 arc" /></p>
+<p>Then I wanted to add some space between each of the images so that they have a little border. Once again, ImageMagick has a way to do that in the form of the <code>-splice</code> argument to the <code>convert</code> command. By adding <code>-splice 10x0+0+0</code> to the command to make the montage results in this:</p>
+<pre><code>convert \( image1.jpg image2.jpg image3.jpg image4.jpg image5.jpg image6.jpg image7.jpg image8.jpg image9.jpg \) \
+        -background White -splice 10x0+0+0 -gravity Center +append montage3.jpg
+</code></pre>
+<p><img alt="Montage 3" src="img/montage3.jpg" title="montage 3" /></p>
+<p><img alt="Montage 3 Arc" src="img/montage3-arc.jpg" title="montage 3 arc" /></p>
+<p>I think that looks better, but the way the white lines between images get more narrow as they approach the center is still apparent.</p>
+<p>So then the plan became to make a bunch of circles and superimpose them on one another. Not surprisingly, ImageMagick has a tool for that called <code>composite</code>. To test this out, I took the following steps:</p>
+<ol>
+<li>Create a linear montage for the outer circle</li>
+<li>Turn that montage into a circle</li>
+<li>Create a linear montage for the inner circle</li>
+<li>Turn that montage into another circle</li>
+<li>Overlay the smaller circle on the larger circle</li>
+</ol>
+<p>The code looks like this:</p>
+<pre><code>convert \( image1.jpg image2.jpg image3.jpg image4.jpg image5.jpg image6.jpg image7.jpg image8.jpg image9.jpg \) \
+        -background White -splice 10x0+0+0 -gravity Center +append montage4.jpg
+
+convert montage4.jpg -virtual-pixel White -distort Arc 360 montage4-arc.jpg
+
+convert \( image10.jpg image11.jpg image12.jpg image13.jpg \) \
+        -background White -splice 10x0+0+0 -gravity Center +append montage5.jpg
+
+convert montage5.jpg -virtual-pixel White -distort Arc 360 montage5-arc.jpg
+
+composite montage5-arc.jpg -gravity Center montage4-arc.jpg -background White composite1.jpg
+</code></pre>
+<p>And results in the following image:</p>
+<p><img alt="Composite 1" src="img/composite1.jpg" title="composite 1" /></p>
+<p>And then I remembered that jpg images do not have transparencies. But <a href="http://en.wikipedia.org/wiki/Portable_Network_Graphics" title="PNG Images">png images</a> do. So I changed the output of the arc distortion commands from jpg to png, changed the <code>-virtual-pixel</code> flag from <code>White</code> to <code>Transparent</code>, and added the <code>-alpha</code> flag . </p>
+<pre><code>convert montage4.jpg -alpha Set -virtual-pixel Transparent -distort Arc 360 montage4-arc.png
+
+convert montage5.jpg -alpha Set -virtual-pixel Transparent -distort Arc 360 montage5-arc.png
+
+composite montage5-arc.png -gravity Center montage4-arc.png -background White composite2.png
+</code></pre>
+<p>Then the <code>composite</code> command results in this:</p>
+<p><img alt="Composite 2" src="img/composite2.png" title="composite 2" /></p>
+<p>It occurs to me just now as I write this (and I wish I'd thought of this while I was doing the project for reasons that will become apparent later), but I might have been able to use ImageMagick's <a href="http://www.imagemagick.org/Usage/compose/#mask" title="Masking">masking capabilities</a> to achieve the same goal. Maybe next time.</p>
+<h2>The Knapsack Problem</h2>
+<p>Now the white areas around the smaller circle are gone, but the smaller circle doesn't completely fit inside the larger circle. And this is where the bulk of my time went on this project. How can I arrange the source images in linear montages in just the right way so that when those linear montages are bent into circles they all line up nicely spaced out?</p>
+<p>When I create a linear montage I know the dimensions of the constituent images, as well as how much space is <code>splice</code>d between them. For instance, this image (click to see it at full size)</p>
+<p><a href="img/montage3-full.jpg" title="montage 3 full"><img alt="Montage 3" src="img/montage3.jpg" title="montage 3" /></a></p>
+<p>is composed of nine images which have the following dimensions</p>
+<table>
+<thead>
+<tr>
+<th>image</th>
+<th>width</th>
+<th>height</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>image1.jpg</td>
+<td>150</td>
+<td>200</td>
+</tr>
+<tr>
+<td>image2.jpg</td>
+<td>301</td>
+<td>200</td>
+</tr>
+<tr>
+<td>image3.jpg</td>
+<td>299</td>
+<td>200</td>
+</tr>
+<tr>
+<td>image4.jpg</td>
+<td>301</td>
+<td>200</td>
+</tr>
+<tr>
+<td>image5.jpg</td>
+<td>134</td>
+<td>200</td>
+</tr>
+<tr>
+<td>image6.jpg</td>
+<td>267</td>
+<td>200</td>
+</tr>
+<tr>
+<td>image7.jpg</td>
+<td>299</td>
+<td>200</td>
+</tr>
+<tr>
+<td>image8.jpg</td>
+<td>133</td>
+<td>200</td>
+</tr>
+<tr>
+<td>image9.jpg</td>
+<td>301</td>
+<td>200</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>2185</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>These nine images also have 10 pixels of white space between them so the total width of the montage should be $ 2185 + ( 9 x 10 ) = 2275 $ pixels wide. Since the top of the image will be the outside of the circle, and we know the width of the image, we know what the circumference of the circle will be. In this case $ C = 2275 $. Using the formula for the circumference of a circle, $ C = 2 \pi r  = \pi d$ we can find the diameter $ d $ of the circle:</p>
+<p>\[\begin{aligned}
+C &amp; = 2275 \\
+C &amp; = \pi d \\
+\pi d &amp; = 2275 \\
+d &amp; = \frac{2275}{\pi} \\
+d &amp; = 724.16 \end{aligned}\]</p>
+<p>Because the image of circle created by ImageMagick is square and there is no padding between the outer edge of the circle and the edge of the image, the diameter of the circle should also be the width of the image. So the width of this image should be 724ish pixels: (again, click on the image to see the full size version)</p>
+<p><a href="img/montage3-arc-full.jpg" title="montage 3 arc full"><img alt="Montage 3 Arc" src="img/montage3-arc.jpg" title="montage 3 arc" /></a></p>
+<p>However, running ImageMagick's <code>identify</code> command on the image shows:</p>
+<pre><code>$ identify montage3-arc-full.png
+montage3-arc-full.png PNG 926x926 926x926+4294966833+4294966833 8-bit DirectClass 1.163MB 0.000u 0:00.000
+</code></pre>
+<p>The image is actually 926 images wide, not 724.</p>
+<p>This didn't make sense. I tried again with different images and each time got a circle that was wider than I expected. But after a few times, I began to notice that no matter how wide the original linear montage was, the width of the circle was always about 200 pixels wider than the math suggests it should be. It took longer than I'd like to admit to realize that 200 pixels is the height of the images making up the linear montage. When I made a circle from a linear montage that was 300 pixels high, the circle was about 300 pixels larger than expected.</p>
+<p>I finally realized that when ImageMagick makes an arc, it distorts the image by making the top part wider than it was originally, the bottom part narrower, and it tries to keep the middle the same. So I drew a red line down the middle and measured some pixels:</p>
+<pre><code>composite -blend 50 montage3-full.jpg -size 2275x200 xc:white \
+          -alpha Set montage3-full-lightened.jpg
+
+convert montage3-full-lightened.jpg \
+    -draw "font-size 60 fill black text 1025, 90 'C = 2275'" \
+    -strokewidth 5 \
+    -stroke Red -draw "line 0, 100 2275, 100" \
+    -virtual-pixel White -distort Arc 360 \
+    -stroke Red   -draw "line 0, 463 100, 463" \
+    -stroke Green -draw "line 100, 463 826, 463" \
+    -stroke Red   -draw "line 826, 463 926, 463" \
+    -strokewidth 0 -stroke Black \
+    -draw "font-size 40 fill black text -60, -10 'd = 726'" \
+    -draw "font-size 40 fill black text -450, -10 '100'" \
+    -draw "font-size 40 fill black text 375, -10 '100'" \
+    montage3-arc-lightened-annotations-full.jpg
+</code></pre>
+<p><a href="img/montage3-arc-lightened-annotations-full.jpg" title="montage 3 arc lightened annotations full"><img alt="Montage 3 Arc Annotations" src="img/montage3-arc-lightened-annotations.jpg" title="&quot;montage 3 arc annotations" /></a></p>
+<p>The computed diameter is the green line in the middle of the resulting image, the extra parts on the edge in red, and the actual diameter is the computed diameter added to the image height. So given a set of images, I can compute (without actually running them through ImageMagick) the diameter of the circle they will create, and this means that I start to try to find sets of images that will look nice together when turned into circles and overlaid on top of each other.</p>
+<p>But going the other way is more difficult. There's no straightforward way to create a circle with a specific diameter. It's not hard to group pictures together, and then compute the diameter of the circle they would create, and then compare how close that is to the desired diameter, but there's no good way to optimize this process. It's similar to the <a href="http://en.wikipedia.org/wiki/Knapsack_problem" title="knapsack problem">the knapsack problem</a>:</p>
+<blockquote>
+<p>Given a set of items, each with a weight and a value, determine the count of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible. It derives its name from the problem faced by someone who is constrained by a fixed-size knapsack and must fill it with the most useful items.</p>
+</blockquote>
+<p>So in order to find the groups of images that will create the desired concentric circles, I wrote a php script that follows a pretty much brute force algorithm for finding groupings of images.</p>
+<p>The pieces of data that are important to this algorithm are:</p>
+<ul>
+<li>the height of all the images</li>
+<li>the widths of each image</li>
+<li>the desired diameter of the outermost circle</li>
+<li>the threshold for equality when considering circle diameters</li>
+<li>the padding between images</li>
+<li>the padding between circles</li>
+</ul>
+<p>And the algorithm itself is</p>
+<ol>
+<li>load image data from all images</li>
+<li>create empty list of images</li>
+<li>add image to list</li>
+<li>compute diameter of circle that would be created from list of images<ul>
+<li>$ sum of image widths + ( image padding \times number of images ) $</li>
+</ul>
+</li>
+<li>if diameter is equal to desired diameter of circle, within a threshold<ul>
+<li>create circle</li>
+<li>compute diameter of next circle<ul>
+<li>$ current diameter - ( 2 \times image height ) - circle padding $</li>
+</ul>
+</li>
+<li>remove images in this circle from consideration for future circles</li>
+<li>go to step 2</li>
+</ul>
+</li>
+<li>if diameter is less than desired diameter<ul>
+<li>go to step 3.</li>
+</ul>
+</li>
+<li>if diameter is greater than desired diameter<ul>
+<li>return images to list of all images</li>
+<li>go to step 2</li>
+</ul>
+</li>
+</ol>
+<p>The output of this script is a make (batch) file which consists of a bunch of ImageMagick calls to:</p>
+<ol>
+<li>turn a few images into a montage</li>
+<li>turn that montage into a circle</li>
+<li>superimpose that circle over other previously created circles.</li>
+</ol>
+<p>The first few times I ran this on a limited set of images I would get something like this, which was very encouraging:</p>
+<p><img alt="Concentric 1" src="img/concentric1.jpg" title="Concentric 1" /></p>
+<p>or like this</p>
+<p><img alt="Concentric 2" src="img/concentric2.jpg" title="Concentric 2" /></p>
+<p>So then I bumped it up to more and more images and started getting this as the output:</p>
+<p><img alt="Concentric 3" src="img/concentric3.jpg" title="Concentric 3" /></p>
+<p>And this was what I thought my original goal was going to be. I had envisioned a dartboard type of image, with concentric circles that went all the way down to the center of the image. But I didn't like how distorted the center looked:</p>
+<p><img alt="Middle 1" src="img/middle1.jpg" title="Middle 1" /></p>
+<p>So set the diameter of the outermost circle to be a few image heights larger than before and got this:</p>
+<p><img alt="Concentric 4" src="img/concentric4.jpg" title="Concentric 4" /></p>
+<p>I think that looks much better. The smaller circles aren't as distorted, and I like how the whitespace in the middle looks.</p>
+<p>As you can see the inter-circle spacing in those trials wasn't very consistent, which is because I hadn't set the threshold low enough. I was afraid the program would take forever to find a good fit and while I was trying to make everything work I gave it a 10 pixel threshold. Thankfully, when I brought that threshold down to 1 pixel on either side of the desired width, it only took a little longer to find groupings that worked.</p>
+<p>At one point I thought there might be duplicate images in some of the circles, so to find them I had the build script only print out each image that was added to the circle and none of the ImageMagick commands. Then using the <code>sort</code>, <code>uniq</code> and <code>wc</code> commands I could figure out what was going on.</p>
+<p>Running this command would show how many images were being added to the circles in total:</p>
+<pre><code>$ wc -l images.txt
+</code></pre>
+<p>And this command would show how many different images were being added:</p>
+<pre><code>$ sort images.txt | uniq | wc -l
+</code></pre>
+<p>If the output of those two commands is different, then there are some images which are being used more than once. Initially there were some images being used more than once because I wasn't removing them from the pool of available images once they'd been added to a circle. Once that was sorted out the two commands above showed that images were being used only once, but it also revealed that not all the images were being used. There were 215 images available to use, but only 206, or 198, or 211 were being used (depending on how wide I set the diameter of the outermost circle). When I looked back over the way images were being added to circles, I realized that when the last (innermost) circle is being made, if the images that are available for it would not make a circle big enough to be close to the next innermost circle, they would just be dropped. So in the case where there were 206 images used, the remaining 9 images would have made a circle much smaller than the previous circle, and so they were not used at all. If they had been, it would have looked something like this:</p>
+<p><img alt="Concentric 5" src="img/concentric5.jpg" title="Concentric 5" /></p>
+<p>In order then to make use of all the images, the inner most circle would most likely be incomplete. To make those images look like they belong, I had to add some whitespace to either end like this</p>
+<p><img alt="Montage 6" src="img/montage6.jpg" title="Montage 6" /></p>
+<p>so that when it was distorted into a circle, it the images would be at the top like this</p>
+<p><img alt="Montage 6 Arc" src="img/montage6-arc.jpg" title="Montage 6 Arc" /></p>
+<h2>Small Issues and Lots of RAM</h2>
+<p>So once I got all this together, I started playing around with different widths to see what looked good. The script looks for the largest circle first and fills in smaller circles as it goes. The makefile it would output would construct the final image in the same way, first creating the largest circle, then the next largest, overlaying them and moving on. This means that every time an image was overlaid, it involved the largest possible image. With six circles, the largest of which being 12000 pixels wide, this meant six overlay operations where at least one image was around 12000 pixels wide. This is a taxing operation and goes slowly. But, if the image construction is done in the opposite order, from the inside out, then the overlay operations start small and only involve the largest image in the last operation. Switching to an inside out final image construction sped up the process considerably.</p>
+<p>The next thing I noticed is the vertical line at the bottom of the concentric circles:</p>
+<p><img alt="Concentric 4 Highlight" src="img/concentric4-highlight.jpg" title="Concentric 4 Highlight" /></p>
+<p>Because each circle is made from a linear montage, and ImageMagick wraps the left end around to touch the right end, having them meet at the bottom of the circle, and because I had an equal amount of spacing between all the images, all these circles had the same spacing aligned at their bottom.</p>
+<p>In order to get rid of this line, I rotated each circle a random amount individually before combining them all into the final image. ImageMagick provides two methods for doing this. The first is the <a href="http://www.imagemagick.org/Usage/warping/#rotate" title="-rotate"><code>-rotate</code> flag</a>, and the second is the <a href="http://www.imagemagick.org/Usage/distorts/#srt" title="SRT">SRT Distort method</a>. I began by using the <code>-rotate</code> flag and that worked fine for the smaller circles 1000 or 2000 pixels across, but after that, it would take forever. So I switched to the SRT method, and that had similar performance problems. I found this out when I did a test run on images that were 400 pixels high. I created the makefile, went to dinner, and came back three hours later to find ImageMagick still chugging away.</p>
+<p>Looking at <a href="http://en.wikipedia.org/wiki/Activity_Monitor" title="Activity Monitor">Activity Monitor</a> showed that only about 4% of the processor was being used, but that there were only 8mb of of available RAM left. I quit the <code>convert</code> process and all of a sudden 2.2GB of RAM was freed. So I looked over all the images that had been created, and found that everything in the makefile had been executed except for the final image rotation and composition. Commenting out all that other stuff I ran the makefile again and watched in Activity Monitor as all the available RAM was consumed in about two minutes while the processor was barely being hit.</p>
+<p>I don't understand how ImageMagick (or <a href="http://en.wikipedia.org/wiki/Preview_%28software%29" title="Preview">Preview.app</a> for that matter) manages memory or represents an image in memory. Opening a 33MB jpg in Preview takes up roughly 75MB of RAM. Opening a 50MB png in Preview takes up roughly 275MB of RAM. On one of ImageMagick's example pages it says that in order to rotate, there have to be three copies of the image in memory. Once real RAM is all used up, ImageMagick moves to virtual memory on disk, which is several orders of magnitude slower, and I'm guessing this is where the problem is.</p>
+<p>ImageMagick has a <code>-monitor</code> flag which will display a little bit of information about what's happening in the form of number of tasks completed out of number of total tasks to complete. Using the <code>-monitor</code> flag on the rotate operation that kept hanging, while monitoring free RAM in Activity Monitor, showed that things were chugging along quite quickly until all the RAM was gone. Then it slowed down to one operation every few seconds. When the rotation operation blasts from 1/9012 to 2144/9000 tasks completed in about a minute, and then takes 5 seconds to get to 2145/9000, and then another 5 seconds to get to 2146/9000, it's going to take about 10 hours to finish, if everything is linear.</p>
+<p>So I needed a new way to rotate images. I settled on a method which rotates the images before they are turned into circles, which looks like this:</p>
+<ol>
+<li>create linear montage</li>
+<li>find width of montage</li>
+<li>select random point in montage</li>
+<li>split montage into left and right parts</li>
+<li>recombine right side of right part to left side of left part</li>
+</ol>
+<p>This like if the right side of the montage was attached to the left side and you could drag in either direction horizontally and anything that moved past one edge would reappear on the other. Like how the asteroids move around in <a href="http://en.wikipedia.org/wiki/Asteroids_%28video_game%29" title="Asteroids">Asteroids</a> (except that Asteroids wraps vertically as well as horizontally).</p>
+<p>So this montage</p>
+<p><img alt="Montage 7" src="img/montage7.jpg" title="Montage 7" /></p>
+<p>is split into two parts, the left</p>
+<p><img alt="Montage 7 Left" src="img/montage7-left.jpg" title="Montage 7 Left" /></p>
+<p>and the right</p>
+<p><img alt="Montage 7 Right" src="img/montage7-right.jpg" title="&quot;Montage 7 Right" /></p>
+<p>Notice how the fourth image from the right in the unsplit montage, the picture of ginger cake, is cut in half between the right side of the left image and the left side of the right image. Then when the sides are swapped and recombined it looks like this:</p>
+<p><img alt="Montage 7 Recombined" src="img/montage7-recombined.jpg" title="&quot;Montage 7 Recombined" /></p>
+<p>Here you can see that the picture of the cake is now split into two parts on the outside. When this is turned into a circle it looks like this, with the cake at the bottom instead of a vertical white line:</p>
+<p><img alt="Montage 7 Arc" src="img/montage7-arc.jpg" title="&quot;Montage 7 Arc" /></p>
+<p>Once that was all sorted out the last thing to do was make a full sized set of circles and add the title. Short Run Posters accepts images that are 17 x 23 inches at 800dpi, which is 13600 x 18400 pixels. I wanted the outside circle to get close to the edge of the maximum width, but not all the way. I played around with various values for the width of the outer circle and the size of the images (400, 600, 750 and 800 pixels) and the one that seemed to work the best was width of 12300 pixels with 600 pixel high images. That's what created the final image.</p>
+<h2>The title and an old technique</h2>
+<p>I like how last year's poster had "Three Coasts" in big letters and "Year One" in smaller italic letters, so I wanted to do that again. Given that I'd been playing around so much with ImageMagick, I thought I'd use some of its <a href="http://www.imagemagick.org/Usage/text/" title="ImageMagick Text">text generation</a> capabilities to draw the words and append them to the top of the circle. The font I used last year is called <a href="http://en.wikipedia.org/wiki/Baskerville" title="Baskerville font">Baskerville</a> and has both regular and italic typefaces. The italic glyphs aren't just slanted regular glyphs, they look completely different.</p>
+<p>So I had ImageMagick draw "THREE COASTS":</p>
+<pre><code>$ convert -background White -fill Black -font 'Baskerville-Regular' -size 400 label:'THREE COASTS' three-coasts-title.jpg
+</code></pre>
+<p>which looks like this:</p>
+<p><img alt="Three Coasts Title" src="img/three-coasts-title.jpg" title="three coasts title" /></p>
+<p>And then I tried to have it draw "Year Two" in the italic font like this:</p>
+<pre><code>$ convert  -background White -fill Black -font "Baskerville-Italic" -size 100 label:'Year Two' three-coasts-year-two.jpg
+</code></pre>
+<p>which came out like this:</p>
+<p><img alt="Three Coasts Year Two" src="img/three-coasts-year-two.jpg" title="three coasts year two" /></p>
+<p>And that's not right. The italic version looks like this:</p>
+<p><img alt="Three Coasts Year Two Correct" src="img/three-coasts-year-two-correct.jpg" title="three coasts year two correct" /></p>
+<p>No amount of fiddling with ImageMagick's <code>-font</code> or <code>-style</code> or other text related flags would get the right output. So I did what I did last year. I created an html document with the text I wanted styled the way I wanted it and had <a href="http://www.paulhammond.org/webkit2png/" title="webkit2png">webkit2png</a> turn it into an image. This is the web page:</p>
+<pre><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Three Coasts - Year Two&lt;/title&gt;
+  &lt;style type="text/css"&gt;
+    .box { margin-bottom:35px }
+    h1 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      text-transform: uppercase;
+      font-size: 600px;
+      font-weight: 100;
+      padding : 0px
+      margin-bottom : 133px
+    }
+    h2 { 
+      font-family: Baskerville, Palatino, Georgia, serif;
+      font-size: 333px;
+      font-style: italic;
+      font-weight: 100;
+      padding: 0px;
+      margin-top: -500px;
+      margin-bottom: 1380px;
+    }
+    #header { text-align:center }
+    #wrapper { margin-left:100px }
+    body { 
+      width:13600px;
+      margin:0px;
+      padding:0px; 
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="header"&gt;
+&lt;h1&gt;Three Coasts&lt;/h1&gt;
+&lt;h2&gt;Year Two&lt;/h2&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>And webkit2png outputs a 13600 x 2746 png that looks like this:</p>
+<p><img alt="TCYT Title" src="img/tcyt-title-full-resized.jpg" title="tcyt title" /></p>
+<h2>Putting it all together</h2>
+<p>The final image size should be 13600 x 18400 pixels. The circles made an image that was 12470 x 12470. The title was 13600 x 2746. I had 15216 pixels of vertical space, and I needed another 3184. So I created some thin whitespace for the top and bottom:</p>
+<pre><code>$ convert -size 10x1000 canvas:White top.jpg
+$ convert -size 10x2184 canvas:White bottom.jpg
+</code></pre>
+<p>and put it all together like this</p>
+<pre><code>$ convert -background White \( top.jpg tcyt-title-full.png ../trial/final.jpg bottom.jpg \) -gravity Center -append tcyt-labeled.jpg
+</code></pre>
+<p>To make this 13600 x 18400 pixel image:</p>
+<p><a href="img/three-coasts-year-two-medium.jpg" title="three coasts year two medium"><img alt="Three Coasts: Year Two" src="img/three-coasts-year-two-small.jpg" title="three-coasts-year-two-small" /></a></p>
+<h2>Conclusion</h2>
+<p>I like how it came out. I like how both my picture with Niv and Fisch's picture with Niv are at the top of the second and fourth circles. That happened randomly with the circle rotation, I did not plan that. I like the way the colors mix, and I like that while each image is distorted slightly, it's not too distorted.</p>
+<p>I already have some ideas for next year's poster too.</p>
+<h2>Colophon</h2>
+<p>This document was written up using <a href="http://en.wikipedia.org/wiki/Markdown" title="Markdown">markdown</a>. I used <a href="http://www.mathjax.org" title="MathJax">MathJax</a> for the math, which displays
+<a href="http://en.wikipedia.org/wiki/LaTeX" title="LaTeX">L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</a> formulas in browsers.</p></div>
+</body>
+</html>
